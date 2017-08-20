@@ -58,6 +58,13 @@ def main():
                 return
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 return
+            if event.type == KEYDOWN and event.key == K_RETURN:
+                if len(cards) > 0:
+                    current_card = cards.pop(0)
+                else:
+                    current_card = ("Finished!", [])
+                bg.fill((250, 250, 250))
+                render_card(current_card, font, bg)
         screen.blit(bg, (0, 0))
         pygame.display.flip()
 
