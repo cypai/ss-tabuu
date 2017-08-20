@@ -15,8 +15,28 @@ def get_words(filename):
     shuffle(cards)
     return cards
 
+def render_card(card, font, bg):
+    centerx = bg.get_rect().centerx
+    word = font.render(card[0], 1, (10, 10, 10))
+    wordpos = word.get_rect()
+    wordpos.centerx = centerx
+    wordpos.centery = 24
+    bg.blit(word, wordpos)
+
+    pygame.draw.line(bg, (10, 10, 10), (0, 64), (300, 64))
+
+    centery = 92
+    for taboo_word in card[1]:
+        taboo_text = font.render(taboo_word, 1, (10, 10, 10))
+        taboo_pos = taboo_text.get_rect()
+        taboo_pos.centerx = centerx
+        taboo_pos.centery = centery
+        bg.blit(taboo_text, taboo_pos)
+        centery += 40
+
 def main():
     cards = get_words("words.txt")
+    current_card = cards.pop(0)
 
     pygame.init()
     screen = pygame.display.set_mode((200, 300))
@@ -27,10 +47,7 @@ def main():
     bg.fill((250, 250, 250))
 
     font = pygame.font.Font(None, 36)
-    text = font.render("Hi", 1, (10, 10, 10))
-    textpos = text.get_rect()
-    textpos.centerx = bg.get_rect().centerx
-    bg.blit(text, textpos)
+    render_card(current_card, font, bg)
 
     screen.blit(bg, (0, 0))
     pygame.display.flip()
